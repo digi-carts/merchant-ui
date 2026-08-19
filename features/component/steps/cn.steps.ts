@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { Then, When } from '@cucumber/cucumber';
-import { cn } from '../../lib/utils';
+import { cn } from '../../../lib/utils';
 
 let result = '';
 

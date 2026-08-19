@@ -1,6 +1,6 @@
 {
   "name": "digi-carts-merchant-ui",
-  "version": "0.1.119",
+  "version": "0.1.121",
   "description": "digi-carts merchant admin UI",
   "private": true,
   "scripts": {

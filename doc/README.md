@@ -66,3 +66,7 @@ Cloud Run `digi-cart-merchant-ui-dev` / `digi-cart-merchant-ui`. `cloudbuild.yam
 - [catalog-service](https://github.com/digi-carts/catalog-service/blob/stage/doc/README.md)
 - [order-service](https://github.com/digi-carts/order-service/blob/stage/doc/README.md)
 - AI map: [docs/ai/KNOWLEDGE_GRAPH.md](../docs/ai/KNOWLEDGE_GRAPH.md)
+
+## REST API reference
+
+See [api.md](api.md) for every HTTP endpoint generated from Spring controllers.
