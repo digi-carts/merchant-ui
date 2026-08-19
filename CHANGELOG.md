@@ -4,6 +4,8 @@
 
 - REST/client notes at `doc/api.md`
 - Service overview restored at `doc/README.md`
+- Fix Cucumber `cn()` import path (`../../../lib/utils`) so `test:component` compiles
+- Load Cucumber steps as CommonJS via ts-node so Node can resolve `lib/utils`
 
 ## [0.1.120] - 2026-08-19
 
