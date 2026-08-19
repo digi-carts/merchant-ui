@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.120] - 2026-08-19
+
+- Cucumber JS component tests (`npm run test:component`)
+- GitHub Actions `pr-tests.yml`: pull requests to `stage`/`main` run component tests and fail the check on failure
+- Dev deploy (`deploy-dev.yml`) runs component tests before Cloud Run update
+
 ## [0.1.119] - 2026-08-18
 
 - Merge pull request #18 from digi-carts/feat/shipping-settings-ui
