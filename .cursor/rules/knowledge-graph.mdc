@@ -1,0 +1,10 @@
+---
+description: File map and knowledge graph for merchant-ui — load so the agent can jump to the right files
+alwaysApply: true
+---
+
+# merchant-ui — AI file map
+
+Start with `AGENTS.md`, then `docs/ai/KNOWLEDGE_GRAPH.md`. Do not scan the whole repo when a task is listed there.
+
+Pages in `app/(admin)/`. HTTP client `lib/api.ts`. Auth `lib/auth-store.ts`. Sidebar is the nav source of truth.

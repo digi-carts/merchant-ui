@@ -1,0 +1,20 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['pull', 'us-east1-docker.pkg.dev/$PROJECT_ID/digi-cart/digi-cart-merchant-ui:latest']
+    allowFailure: true
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-east1-docker.pkg.dev/$PROJECT_ID/digi-cart/digi-cart-merchant-ui:latest'
+      - '--cache-from'
+      - 'us-east1-docker.pkg.dev/$PROJECT_ID/digi-cart/digi-cart-merchant-ui:latest'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_API_URL=https://digi-cart-api-gateway-496160804659.us-east1.run.app/api'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_STOREFRONT_DOMAIN=digi-carts.com'
+      - '.'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-east1-docker.pkg.dev/$PROJECT_ID/digi-cart/digi-cart-merchant-ui:latest']
+images:
+  - 'us-east1-docker.pkg.dev/$PROJECT_ID/digi-cart/digi-cart-merchant-ui:latest'
