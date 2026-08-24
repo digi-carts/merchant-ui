@@ -22,6 +22,9 @@ jobs:
           context: .
           push: true
           tags: ${{ env.IMAGE }}-dev:latest
+          build-args: |
+            NEXT_PUBLIC_API_URL=https://digi-cart-api-gateway-dev-1029259316158.us-east1.run.app
+            NEXT_PUBLIC_STOREFRONT_URL=https://digi-cart-storefront-dev-1029259316158.us-east1.run.app
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Deploy to Cloud Run (dev)
