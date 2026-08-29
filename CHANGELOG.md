@@ -1,6 +1,22 @@
 # Changelog
 
-## [0.1.119] - 2026-08-18
+## [0.1.120] - 2026-08-29
+
+### Features
+- add /v1 versioning prefix to API base URL
+
+### Bug Fixes
+- correct stores page API paths, response shapes, and HTTP method
+- regenerate package-lock.json; exclude features/ from TypeScript compilation
+
+### Documentation
+- add complete project documentation
+
+### CI/Build
+- add /api suffix to NEXT_PUBLIC_API_URL build arg
+- pass NEXT_PUBLIC_API_URL build arg so dev deploy uses gateway URL
+- trigger first dev build
+- use separate GCP project IDs for dev (digi-carts-dev) and prod (digi-carts)## [0.1.119] - 2026-08-18
 
 - Merge pull request #18 from digi-carts/feat/shipping-settings-ui
 
