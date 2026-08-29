@@ -89,10 +89,10 @@ export default function PagesPage() {
 
   const load = useCallback(async () => {
     const [pagesRes, storeRes] = await Promise.all([
-      api.get('/store/pages'),
+      api.get('/pages'),
       api.get('/store'),
     ]);
-    setPages(pagesRes.data.pages || []);
+    setPages(pagesRes.data || []);
     setSubdomain(storeRes.data.store?.subdomain || '');
   }, []);
 
@@ -102,8 +102,8 @@ export default function PagesPage() {
 
   const startEdit = async (p: Page) => {
     setError('');
-    const r = await api.get(`/store/pages/${p.id}`);
-    setEditing(r.data.page);
+    const r = await api.get(`/pages/${p.id}`);
+    setEditing(r.data);
     setMode('edit');
   };
 
@@ -111,9 +111,9 @@ export default function PagesPage() {
     setSaving(true); setError('');
     try {
       if (mode === 'create') {
-        await api.post('/store/pages', form);
+        await api.post('/pages', form);
       } else if (editing) {
-        await api.patch(`/store/pages/${editing.id}`, form);
+        await api.put(`/pages/${editing.id}`, form);
       }
       await load();
       setMode('list');
@@ -124,7 +124,7 @@ export default function PagesPage() {
 
   const deletePage = async (p: Page) => {
     if (!confirm(`Delete page "${p.title}"?`)) return;
-    await api.delete(`/store/pages/${p.id}`);
+    await api.delete(`/pages/${p.id}`);
     await load();
   };
 
