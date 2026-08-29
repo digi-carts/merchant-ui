@@ -38,6 +38,7 @@ api.interceptors.response.use(
 
     if (error.response?.status === 401 && !original._retry) {
       original._retry = true;
+      const hadSession = !!readState().user;
       try {
         const { refreshToken } = readState();
         if (!refreshToken) throw new Error('no refresh token');
@@ -47,7 +48,7 @@ api.interceptors.response.use(
         return api(original);
       } catch {
         localStorage.removeItem('auth-store-v3');
-        if (typeof window !== 'undefined' && !window.location.pathname.includes('/login')) window.location.href = '/login';
+        if (hadSession && typeof window !== 'undefined' && !window.location.pathname.includes('/login')) window.location.href = '/login';
       }
     }
 
