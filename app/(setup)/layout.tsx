@@ -179,7 +179,7 @@ export default function SetupLayout({ children }: Readonly<{ children: React.Rea
     })();
     if (refreshToken) {
       const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api';
-      axios.post(`${apiBase}/auth/refresh`, { refreshToken })
+      axios.post(`${apiBase}/v1/auth/refresh`, { refreshToken })
         .then(r => {
           try {
             const raw = localStorage.getItem('auth-store-v3');
