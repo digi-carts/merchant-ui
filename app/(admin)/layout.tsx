@@ -70,7 +70,7 @@ export function getSubStatusCache() { return _subStatusCache; }
 export function fetchSubStatus(): Promise<void> {
   if (_subStatusCache && Date.now() - _subStatusFetchedAt < SUB_TTL_MS) return Promise.resolve();
   if (_subStatusInflight !== null) return _subStatusInflight;
-  _subStatusInflight = api.get('/platform/subscription-status')
+  _subStatusInflight = api.get('/subscription/status')
     .then(({ data }) => { _subStatusCache = data; _subStatusFetchedAt = Date.now(); })
     .catch(() => {})
     .finally(() => { _subStatusInflight = null; });
@@ -78,7 +78,8 @@ export function fetchSubStatus(): Promise<void> {
 }
 
 export default function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const { user, clearAuth } = useAuthStore();
+  const { user, clearAuth, setStoreId } = useAuthStore();
+  const storeIdInState = useAuthStore(s => s.storeId);
   const router = useRouter();
   const pathname = usePathname();
   const [hydrated, setHydrated] = useState(false);
@@ -109,6 +110,7 @@ export default function AdminLayout({ children }: Readonly<{ children: React.Rea
               const parsed = JSON.parse(raw);
               parsed.state.accessToken = r.data.accessToken;
               parsed.state.refreshToken = r.data.refreshToken;
+              if (r.data.user?.storeId) parsed.state.storeId = r.data.user.storeId;
               localStorage.setItem('auth-store-v3', JSON.stringify(parsed));
             }
           } catch { /* ignore */ }
@@ -127,6 +129,15 @@ export default function AdminLayout({ children }: Readonly<{ children: React.Rea
   useEffect(() => {
     if (hydrated && user?.role === 'merchant') fetchSubStatus();
   }, [hydrated, user]);
+
+  // Fetch and persist storeId for merchants who don't have it in state yet (e.g., pre-fix sessions)
+  useEffect(() => {
+    if (!hydrated || !user || storeIdInState) return;
+    api.get('/store').then(r => {
+      const id = r.data?.store?.id;
+      if (id) setStoreId(id.toString());
+    }).catch(() => {});
+  }, [hydrated, user, storeIdInState, setStoreId]);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {

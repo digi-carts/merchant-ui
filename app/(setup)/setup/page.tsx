@@ -183,7 +183,7 @@ export default function SetupPage() {
 }
 
 function SetupWizard() {
-  const { user, setSetupProgress, setSetupComplete } = useAuthStore();
+  const { user, setSetupProgress, setSetupComplete, setStoreId: setAuthStoreId } = useAuthStore();
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -436,7 +436,8 @@ function SetupWizard() {
       setBrandings(newBranding);
 
       if (!storeExists) {
-        await api.post('/store', { name: storeName.trim(), subdomain: storeId, storeUrlId: storeId, email: shopEmail || undefined, phone, currency });
+        const { data: createdStore } = await api.post('/store', { name: storeName.trim(), subdomain: storeId, storeUrlId: storeId, email: shopEmail || undefined, phone, currency });
+        if (createdStore?.id) setAuthStoreId(createdStore.id.toString());
         setStoreExists(true);
       }
       await api.patch('/store', { name: storeName.trim(), email: shopEmail || undefined, phone, currency, branding: newBranding });
