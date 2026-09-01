@@ -70,7 +70,7 @@ export function getSubStatusCache() { return _subStatusCache; }
 export function fetchSubStatus(): Promise<void> {
   if (_subStatusCache && Date.now() - _subStatusFetchedAt < SUB_TTL_MS) return Promise.resolve();
   if (_subStatusInflight !== null) return _subStatusInflight;
-  _subStatusInflight = api.get('/platform/subscription-status')
+  _subStatusInflight = api.get('/subscription/status')
     .then(({ data }) => { _subStatusCache = data; _subStatusFetchedAt = Date.now(); })
     .catch(() => {})
     .finally(() => { _subStatusInflight = null; });
