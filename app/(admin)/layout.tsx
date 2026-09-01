@@ -100,7 +100,7 @@ export default function AdminLayout({ children }: Readonly<{ children: React.Rea
     })();
     if (refreshToken) {
       _lastTokenRefreshAt = Date.now();
-      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api';
+      const apiBase = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api') + '/v1';
       axios.post(`${apiBase}/auth/refresh`, { refreshToken })
         .then(r => {
           try {
