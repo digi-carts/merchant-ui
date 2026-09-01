@@ -71,10 +71,10 @@ export default function AdminDashboard() {
     api.get(`/orders/analytics?days=${chartDays}`).then(r => setAnalytics(r.data)).catch(() => {});
   }, [chartDays]);
 
-  const chartData = analytics?.ordersByDay.slice(-chartDays).map(d => ({
+  const chartData = analytics?.ordersByDay?.slice(-chartDays).map(d => ({
     date: shortDate(d.date), revenue: d.revenue, orders: d.orders,
   })) ?? [];
-  const topProducts = analytics?.topProducts.slice(0, 6) ?? [];
+  const topProducts = analytics?.topProducts?.slice(0, 6) ?? [];
 
   const storeCardClass = !store
     ? ''
