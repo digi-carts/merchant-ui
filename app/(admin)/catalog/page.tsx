@@ -217,14 +217,8 @@ export default function CatalogPage() {
 
   const uploadImage = async (productId: string, file: File) => {
     const fd = new FormData();
-    fd.append('image', file);
-    const token = localStorage.getItem('accessToken');
-    const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api').replace('/api', '');
-    await fetch(`${baseUrl}/api/catalog/products/${productId}/images`, {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${token ?? ''}`, 'x-store-id': storeId ?? '', 'x-user-role': 'merchant' },
-      body: fd,
-    });
+    fd.append('file', file);
+    await api.post(`/catalog/products/${productId}/images`, fd);
   };
 
   const saveCategory = async (e: React.SyntheticEvent<HTMLFormElement>) => {
